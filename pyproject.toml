@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "wenke-studio-infrastructure"
+version = "0.1.0"
+description = ""
+authors = ["wenke.lai <wenke.lai@wenke-studio.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+# pulumi
+pulumi = "^3.88.0"
+pulumi-aws = "^6.4.1"
+# other
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.16.1"
+# format
+black = "^23.9.1"
+isort = "^5.12.0"
+# lint
+pylint = "^3.0.1"
+mypy = "^1.5.1"
+# commit
+commitizen = "^3.10.0"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
