@@ -23,9 +23,6 @@ def main():
     wenke_lai = aws.iam.User(
         "wenke_lai",
         name="wenke.lai",
-        # tags={
-        #     "AKIAWGRE5SVJUH2XP6WB": "wenke.pc",
-        # },
         opts=pulumi.ResourceOptions(protect=True),
     )
 

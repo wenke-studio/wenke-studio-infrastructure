@@ -2,3 +2,6 @@ encryptionsalt: v1:VMAiqKVe81c=:v1:3gen/zf/UIQlqAOa:uxvmLGJaKPM8EIb+CmqqlD9mlLig
 config:
   aws:profile: default
   aws:region: us-west-2
+  aws:defaultTags:
+    tags:
+      stack: root
