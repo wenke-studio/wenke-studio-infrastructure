@@ -23,6 +23,41 @@ mypy = "^1.5.1"
 # commit
 commitizen = "^3.10.0"
 
+[tool.isort]
+profile = "black"
+known_pulumi = "pulumi,pulumi_aws"
+sections = "FUTURE,STDLIB,PULUMI,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+
+[tool.pylint.main]
+load-plugins = [
+]
+ignore = [
+]
+
+[tool.pylint.messages_control]
+disable = [
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "too-many-arguments",
+  "too-many-locals",
+  "too-few-public-methods",
+  "fixme",
+]
+
+[tool.pylint.basic]
+good-names = [
+  "pk",
+  "_",
+  "fr",
+  "id",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude = [
+]
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 tag_format = "$version"
