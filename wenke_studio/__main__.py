@@ -33,6 +33,13 @@ def main():
         opts=pulumi.ResourceOptions(protect=True),
     )
 
+    wenke_studio = aws.route53.Zone(
+        "wenke_studio",
+        comment="HostedZone created by Route53 Registrar",
+        name="wenke-studio.com",
+        opts=pulumi.ResourceOptions(protect=True),
+    )
+
 
 if __name__ == "__main__":
     main()
