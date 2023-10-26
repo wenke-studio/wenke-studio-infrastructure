@@ -1,0 +1,8 @@
+encryptionsalt: v1:5panU/GPYZ4=:v1:61/GGRY/WqzP5JUl:t0LocTO8dbd46QJ4jYK9xztTst9/4g==
+config:
+  aws:profile: default
+  aws:region: us-west-2
+  aws:defaultTags:
+    tags:
+      project: about
+      stack: dev
