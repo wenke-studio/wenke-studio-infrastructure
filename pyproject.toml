@@ -14,49 +14,8 @@ pulumi-aws = "^6.4.1"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.16.1"
-# format
-black = "^23.9.1"
-isort = "^5.12.0"
-# lint
-pylint = "^3.0.1"
-mypy = "^1.5.1"
-# commit
-commitizen = "^3.10.0"
-
-[tool.isort]
-profile = "black"
-known_pulumi = "pulumi,pulumi_aws"
-sections = "FUTURE,STDLIB,PULUMI,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
-
-[tool.pylint.main]
-load-plugins = [
-]
-ignore = [
-]
-
-[tool.pylint.messages_control]
-disable = [
-  "missing-module-docstring",
-  "missing-class-docstring",
-  "missing-function-docstring",
-  "too-many-arguments",
-  "too-many-locals",
-  "too-few-public-methods",
-  "fixme",
-]
-
-[tool.pylint.basic]
-good-names = [
-  "pk",
-  "_",
-  "fr",
-  "id",
-]
-
-[tool.mypy]
-ignore_missing_imports = true
-exclude = [
-]
+# format and lint
+ruff = "^0.4.8"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
