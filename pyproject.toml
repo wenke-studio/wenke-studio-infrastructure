@@ -11,6 +11,7 @@ python = "^3.11"
 pulumi = "^3.119.0"
 pulumi-aws = "^6.39.0"
 # other
+integrator = {git = "https://github.com/wenke-studio/integrator.git"}
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.25.0"
