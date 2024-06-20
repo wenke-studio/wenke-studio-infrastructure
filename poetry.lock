@@ -321,7 +321,7 @@ requests = "^2.31.0"
 type = "git"
 url = "https://github.com/wenke-studio/integrator.git"
 reference = "HEAD"
-resolved_reference = "c18af8737d9939f8707f5b7aef7ee37027251433"
+resolved_reference = "d27c0d3d5790de8a2102c2090dccae5229e3f1b3"
 
 [[package]]
 name = "ipython"
@@ -492,12 +492,12 @@ files = [
 
 [[package]]
 name = "pulumi"
-version = "3.119.0"
+version = "3.120.0"
 description = "Pulumi's Python SDK"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pulumi-3.119.0-py3-none-any.whl", hash = "sha256:a8c278f58c747846a83b31c38a0a0e0313bf0459c9b2282f98b9f73a2e99e7c7"},
+    {file = "pulumi-3.120.0-py3-none-any.whl", hash = "sha256:786f0bd54c64e15afba92a4a5c22480d2c322315d867c1532525c069a7615b09"},
 ]
 
 [package.dependencies]
@@ -510,13 +510,13 @@ six = ">=1.12,<2.0"
 
 [[package]]
 name = "pulumi-aws"
-version = "6.39.0"
+version = "6.40.0"
 description = "A Pulumi package for creating and managing Amazon Web Services (AWS) cloud resources."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pulumi_aws-6.39.0-py3-none-any.whl", hash = "sha256:70b89e8f85bb5fdf15d394a4280edef315687f507a0267fc14477b223565bd50"},
-    {file = "pulumi_aws-6.39.0.tar.gz", hash = "sha256:df8fd5b5f62c0f2b672f0eb5e8a2cd4f0b7642582d0d8434b1655d5dc97cf942"},
+    {file = "pulumi_aws-6.40.0-py3-none-any.whl", hash = "sha256:51dceec7f918d3ad3161ccf3ce0a8d0200cbfe88af7258a558ad9442ddfcd2dd"},
+    {file = "pulumi_aws-6.40.0.tar.gz", hash = "sha256:f3cba2c64cd0e405e694b435760cee21ca869d671ff50831e316cd4d7362d927"},
 ]
 
 [package.dependencies]

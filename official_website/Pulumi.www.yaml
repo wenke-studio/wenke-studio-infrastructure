@@ -1,0 +1,9 @@
+encryptionsalt: v1:R9oU4PkhuJI=:v1:r+s6EF9Lc7Ryt0C6:K9fMzFXpQHpS7a2kzeQXeal0zOHPfA==
+config:
+  aws:profile: default
+  aws:region: us-west-2
+  aws:defaultTags:
+    tags:
+      project: official-website
+      stack: www
+      owner: wenke.lai
