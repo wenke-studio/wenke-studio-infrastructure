@@ -39,6 +39,18 @@ def main():
         opts=pulumi.ResourceOptions(protect=True),
     )
 
+    virginia = aws.Provider("virginia", region="us-east-1")
+    aws.acm.Certificate(
+        "certificate",
+        domain_name="*.wenke-studio.com",
+        validation_method="DNS",
+        opts=pulumi.ResourceOptions(provider=virginia, protect=True),
+    )
+    pulumi.export(
+        "certificate",
+        "arn:aws:acm:us-east-1:426352940371:certificate/383e1e78-5986-46c5-bdcc-951d5fad5207",
+    )
+
     wenke_studio = aws.route53.Zone(
         "wenke_studio",
         comment="HostedZone created by Route53 Registrar",
