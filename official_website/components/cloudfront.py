@@ -32,6 +32,7 @@ class CloudFront:
             ordered_cache_policy=five_cache_policy,
             origin_access_control=origin_access_control,
             certificate=certificate,
+            http_version="http2",
         )
 
         pulumi.export(
