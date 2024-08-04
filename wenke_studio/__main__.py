@@ -30,7 +30,13 @@ class IAM:
         )
 
 
-def create_static_website_for_a_record(zone: aws.route53.Zone):
+def create_static_website_to_redirect(zone: aws.route53.Zone):
+    """
+    Redirect requests from wenke-studio.com to www.wenke-studio.com (root domain to subdomain).
+
+    ! note: Amazon S3 website endpoints do not support HTTPS or access points.
+            If you want to use HTTPS, you can use Amazon CloudFront to serve a static website hosted on Amazon S3.
+    """
     resource_name = "root-record"
 
     bucket = aws.s3.BucketV2(
@@ -38,47 +44,14 @@ def create_static_website_for_a_record(zone: aws.route53.Zone):
         # The name of the bucket is the same as the name of the record that you're creating
         bucket="wenke-studio.com",
     )
-    aws.s3.BucketObjectv2(
-        resource_name,
-        bucket=bucket.id,
-        key="index.html",
-        source=pulumi.FileAsset("index.html"),
-    )
     website = aws.s3.BucketWebsiteConfigurationV2(
         resource_name,
         bucket=bucket.id,
-        index_document={
-            "suffix": "index.html",
+        redirect_all_requests_to={
+            "host_name": "www.wenke-studio.com",
+            "protocol": "https",
         },
     )
-
-    aws.s3.BucketPublicAccessBlock(
-        resource_name,
-        bucket=bucket.id,
-        block_public_acls=False,
-        block_public_policy=False,
-        ignore_public_acls=False,
-        restrict_public_buckets=False,
-    )
-    aws.s3.BucketPolicy(
-        "bucket-policy",
-        bucket=bucket.id,
-        policy=bucket.arn.apply(
-            lambda arn: {
-                "Version": "2012-10-17",
-                "Statement": [
-                    {
-                        "Sid": "PublicReadGetObject",
-                        "Effect": "Allow",
-                        "Principal": "*",
-                        "Action": ["s3:GetObject"],
-                        "Resource": [f"{arn}/*"],
-                    }
-                ],
-            }
-        ),
-    )
-
     aws.route53.Record(
         resource_name,
         zone_id=zone.zone_id,
@@ -132,7 +105,7 @@ def main():
         "arn:aws:acm:us-east-1:426352940371:certificate/383e1e78-5986-46c5-bdcc-951d5fad5207",
     )
 
-    create_static_website_for_a_record(wenke_studio)
+    create_static_website_to_redirect(wenke_studio)
 
 
 if __name__ == "__main__":
