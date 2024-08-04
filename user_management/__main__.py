@@ -1,10 +1,12 @@
 import pulumi
+from integrator.aws import route53
 from pulumi_aws import cognito
 
 STACK = pulumi.get_stack()
 
 DOMAIN = "wenke-studio.com"
-SUBDOMAIN = "auth"
+
+ALLOWED_DOMAIN = "https://example.com"
 
 
 def _(name: str) -> str:
@@ -12,8 +14,6 @@ def _(name: str) -> str:
 
 
 def main():
-    domain = f"{_(SUBDOMAIN)}.{DOMAIN}"
-
     user_pool = cognito.UserPool(
         _("user-management"),
         username_attributes=["email"],
@@ -46,6 +46,13 @@ def main():
             "authorize_scopes": "email",
             "client_id": "your client_id",
             "client_secret": "your client_secret",
+            # default created by cognito
+            "attributes_url": "https://people.googleapis.com/v1/people/me?personFields=",
+            "attributes_url_add_attributes": "true",
+            "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+            "oidc_issuer": "https://accounts.google.com",
+            "token_request_method": "POST",
+            "token_url": "https://www.googleapis.com/oauth2/v4/token",
         },
         attribute_mapping={
             "email": "email",
@@ -57,10 +64,10 @@ def main():
         user_pool_id=user_pool.id,
         generate_secret=False,
         callback_urls=[
-            "https://example.com/callback",
+            f"{ALLOWED_DOMAIN}/callback",
         ],
         logout_urls=[
-            "https://example.com/logout",
+            f"{ALLOWED_DOMAIN}/logout",
         ],
         allowed_oauth_flows=[
             "code",
@@ -71,7 +78,39 @@ def main():
             "openid",
         ],
         # options: COGNITO | SAML | Facebook | Google | LoginWithAmazon | SignInWithApple | OIDC
-        supported_identity_providers=["COGNITO", "Google"],
+        supported_identity_providers=[
+            "COGNITO",
+            google_identity_provider.provider_name,
+        ],
+    )
+
+    user_pool_domain = cognito.UserPoolDomain(
+        _("user-management"),
+        user_pool_id=user_pool.id,
+        domain=f"{_('user-management')}.{DOMAIN}",
+        certificate_arn="arn:aws:acm:us-east-1:426352940371:certificate/383e1e78-5986-46c5-bdcc-951d5fad5207",
+    )
+    zone = route53.Zone.get(
+        _("user-management"),
+        id="Z00953103US9YCDDRTT8Z",
+    )
+    zone.create_cname_record(
+        _("user-management"),
+        name=user_pool_domain.domain,
+        record=user_pool_domain.cloudfront_distribution,
+    )
+
+    pulumi.export(
+        "hosted-ui",
+        pulumi.Output.all(
+            domain=user_pool_domain.domain,
+            client_id=user_pool_client.id,
+            redirect_uri=f"{ALLOWED_DOMAIN}/callback",
+        ).apply(
+            lambda kwargs: {
+                "login": f"https://{kwargs['domain']}/login?response_type=code&client_id={kwargs['client_id']}&redirect_uri={kwargs['redirect_uri']}"
+            }
+        ),
     )
 
 
