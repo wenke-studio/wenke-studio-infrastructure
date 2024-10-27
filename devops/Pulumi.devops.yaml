@@ -1,0 +1,10 @@
+encryptionsalt: v1:8Qu4T2zZeuU=:v1:XVDaOjIhemp8HMWz:irga6mie1zTgVEf4BuYXRhKTeXMqPg==
+config:
+  aws:profile: default
+  aws:region: us-west-2
+  aws:defaultTags:
+    tags:
+      Module: DevOps
+      Stack: DevOps
+      Owner: Wenke.Lai
+      Name: DevOps
