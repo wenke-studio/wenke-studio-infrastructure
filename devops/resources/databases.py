@@ -53,7 +53,30 @@ def create_redis(
     subnets: list[ec2.Subnet],
     security_group: ec2.SecurityGroup,
 ):
-    pass
+    subnet_group = elasticache.SubnetGroup(
+        resource_name("redis"),
+        subnet_ids=[subnet.id for subnet in subnets],
+    )
+
+    parameter_group = elasticache.ParameterGroup(
+        resource_name("redis"),
+        family="redis7",  # redis7 is non-cluster version by default
+        parameters=[],
+    )
+
+    elasticache.Cluster(
+        resource_name("redis"),
+        engine="redis",
+        engine_version="7.1",
+        node_type="cache.t3.medium",
+        num_cache_nodes=1,
+        parameter_group_name=parameter_group.name,
+        port=6379,
+        subnet_group_name=subnet_group.name,
+        security_group_ids=[security_group.id],
+        snapshot_retention_limit=30,
+        auto_minor_version_upgrade=True,
+    )
 
 
 def create_databases(
@@ -83,6 +106,6 @@ def create_databases(
     )
 
     create_postgresql(subnets, security_group)
-    # create_redis(subnets, security_group)
+    create_redis(subnets, security_group)
 
     return security_group
