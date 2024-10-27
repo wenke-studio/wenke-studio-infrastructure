@@ -1,6 +1,11 @@
 import pulumi
 from pulumi_aws import ec2, get_availability_zones
-from resources import create_databases, create_load_balancer, resource_name
+from resources import (
+    create_databases,
+    create_gitlab,
+    create_load_balancer,
+    resource_name,
+)
 
 
 def create_network(max_azs: int = 3) -> tuple[ec2.Vpc, list[str]]:
@@ -40,7 +45,18 @@ def main():
         vpc, availability_zones, subnet_offset=10
     )
 
-    db_sb = create_databases(vpc, availability_zones, subnet_offset=20)
+    db_sg = create_databases(vpc, availability_zones, subnet_offset=20)
+
+    gitlab_sg = create_gitlab(
+        vpc,
+        availability_zones,
+        subnet_offset=30,
+        target_group=target_group,
+    )
+
+    # todo: runner
+
+    # todo: security group rules
 
 
 if __name__ == "__main__":

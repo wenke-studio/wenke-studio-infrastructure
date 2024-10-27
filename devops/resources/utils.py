@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_aws import ec2
+from pulumi_aws import ec2, iam
 
 PROJECT = pulumi.get_project()
 
@@ -24,3 +24,34 @@ def create_public_subnets(
         )
         for index, availability_zone in enumerate(availability_zones)
     ]
+
+
+def create_the_service_role(
+    resource_name: str,
+    service: str,
+    policies: dict[str, iam.Policy | iam.AwaitableGetPolicyResult] | None = None,
+) -> iam.Role:
+    document = iam.get_policy_document(
+        version="2012-10-17",
+        statements=[
+            iam.GetPolicyDocumentStatementArgs(
+                effect="Allow",
+                actions=["sts:AssumeRole"],
+                principals=[{"Type": "Service", "identifiers": [service]}],
+            )
+        ],
+    )
+    role = iam.Role(
+        resource_name,
+        assume_role_policy=document.json,
+    )
+
+    if policies:
+        for name, policy in policies.items():
+            iam.RolePolicyAttachment(
+                resource_name + "-" + name,
+                role=role.name,
+                policy_arn=policy.arn,
+            )
+
+    return role
