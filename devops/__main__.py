@@ -36,6 +36,10 @@ def create_network(max_azs: int = 3) -> tuple[ec2.Vpc, list[str]]:
 def main():
     vpc, availability_zones = create_network(max_azs=3)
 
+    alb_sg, target_group = create_load_balancer(
+        vpc, availability_zones, subnet_offset=10
+    )
+
 
 if __name__ == "__main__":
     main()
