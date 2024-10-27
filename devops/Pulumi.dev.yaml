@@ -1,7 +1,0 @@
-encryptionsalt: v1:TT5Ttmr7Ea4=:v1:R1nCSvRaTM2UTaQd:PA790lDHpjagkj0kVk3S188onYgMKg==
-config:
-  aws:profile: default
-  aws:region: us-west-2
-  aws:defaultTags:
-    tags:
-      stack: dev
