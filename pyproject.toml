@@ -9,6 +9,13 @@ dependencies = [
     "pulumi-aws>=6.56.1",
 ]
 
+[project.optional-dependencies]
+pulumi = [
+    # fixme: remove this dependency after the issue is fixed
+    # https://github.com/pulumi/pulumi/issues/12390
+    "pip>=24.3",
+]
+
 [tool.uv]
 dev-dependencies = [
     "commitizen>=3.30.0",
