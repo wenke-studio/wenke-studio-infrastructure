@@ -1,4 +1,0 @@
-name: user_management
-runtime:
-  name: python
-description: A minimal AWS Python Pulumi program
