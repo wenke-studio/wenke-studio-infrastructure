@@ -1,31 +1,23 @@
-[tool.poetry]
+[project]
 name = "wenke-studio-infrastructure"
 version = "0.1.0"
-description = ""
-authors = ["wenke.lai <wenke.lai@wenke-studio.com>"]
+description = "Add your description here"
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pulumi>=3.137.0",
+    "pulumi-aws>=6.56.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-# pulumi
-pulumi = "^3.119.0"
-pulumi-aws = "^6.39.0"
-# other
-integrator = {git = "https://github.com/wenke-studio/integrator.git"}
-
-[tool.poetry.group.dev.dependencies]
-ipython = "^8.25.0"
-# format and lint
-ruff = "^0.4.8"
+[tool.uv]
+dev-dependencies = [
+    "commitizen>=3.30.0",
+    "ruff>=0.7.1",
+]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
 tag_format = "$version"
 version_scheme = "pep440"
-version_provider = "poetry"
+version_provider = "pep621"
 update_changelog_on_bump = true
-major_version_zero = true
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
