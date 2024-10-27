@@ -1,6 +1,6 @@
 import pulumi
 from pulumi_aws import ec2, get_availability_zones
-from resources import resource_name
+from resources import create_databases, create_load_balancer, resource_name
 
 
 def create_network(max_azs: int = 3) -> tuple[ec2.Vpc, list[str]]:
@@ -39,6 +39,8 @@ def main():
     alb_sg, target_group = create_load_balancer(
         vpc, availability_zones, subnet_offset=10
     )
+
+    db_sb = create_databases(vpc, availability_zones, subnet_offset=20)
 
 
 if __name__ == "__main__":

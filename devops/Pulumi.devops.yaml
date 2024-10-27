@@ -9,3 +9,5 @@ config:
       Owner: Wenke.Lai
       Name: DevOps
   devops:zone_id: Z00953103US9YCDDRTT8Z
+  devops:postgresql_password:
+    secure: v1:3TDQGN2zCuB5kux5:zRZLVfj9DTsSpDEEfRJN1+6fGE6qRpock8IZRjp5XPb8UAzIILG+XfvQx53R1xHVwOyclEhE0smT+b8ifxI1YFj3K45q58+w97Fj1rNrEvY=
